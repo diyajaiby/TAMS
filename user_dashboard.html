@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>User Dashboard - TripCore</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <style>
+   <style>
     :root {
       --blue-primary: #265aaa;
       --blue-dark: #22466b;
@@ -357,23 +357,30 @@
 
         // Update currentUser in localStorage
         let currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
-        // For name, map to fullname
         if (field === 'name') {
           currentUser.fullname = newValue;
         } else {
           currentUser[field] = newValue;
         }
+
+        // Synchronize update in users array in localStorage
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        const index = users.findIndex(u => u.username === currentUser.username);
+        if (index !== -1) {
+          users[index] = currentUser;
+          localStorage.setItem('users', JSON.stringify(users));
+        }
+
         localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
-        // Update UI
+        // Update the UI
         const newSpan = document.createElement('span');
-        newSpan.id = (field === 'name' ? 'profile-name' : 'profile-' + field);
+        newSpan.id = field === 'name' ? 'profile-name' : 'profile-' + field;
         newSpan.textContent = newValue;
         input.replaceWith(newSpan);
 
         btn.textContent = 'Edit';
 
-        // Update welcome and nav username if name changed
         if (field === 'name') {
           showUsername();
         }
