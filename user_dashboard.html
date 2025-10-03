@@ -115,7 +115,6 @@
     #logoutBtn:hover {
       background-color: var(--blue-dark);
     }
-
     .dashboard-shell {
       max-width: 900px;
       margin: 60px auto 40px auto;
@@ -132,7 +131,6 @@
       letter-spacing: 1.5px;
       user-select: none;
     }
-
     /* Welcome Card */
     .welcome-card {
       background:#fff;
@@ -155,7 +153,6 @@
       font-size: 1.1rem;
       margin-top: 0;
     }
-
     /* Popular Destinations Carousel */
     .featured-destinations {
       max-width: 900px;
@@ -187,33 +184,6 @@
       transform: scale(1.05);
       box-shadow: 0 12px 24px rgba(0,0,0,0.5);
     }
-
-    /* Booking Summary 
-    #booking-summary-card {
-      background: var(--white);
-      border-radius: 24px;
-      box-shadow: 0 12px 26px var(--card-shadow);
-      width: 100%;
-      max-width: 700px;
-      padding: 30px 40px;
-      user-select: none;
-      color: var(--blue-dark);
-      text-align: center;
-      font-size: 1.2rem;
-      font-weight: 600;
-    }
-    #booking-summary-card h2 {
-      font-size: 1.8rem;
-      font-weight: 900;
-      color: var(--blue-primary);
-      margin-bottom: 24px;
-    }
-    #booking-summary-card p {
-      font-style: italic;
-      color: #657a9c;
-      margin-top: 16px;
-    }*/
-
     /* Profile Section styling */
     .main-section {
       background: var(--white);
@@ -311,11 +281,6 @@
       </div>
     </section>
 
-    <!--section id="booking-summary-card" aria-label="Booking summary">
-      <h2>Booking Summary</h2>
-      <p>No bookings yet.</p>
-    </section-->
-
     <section class="main-section" aria-label="Profile information">
       <div class="profile-box">
         <div class="profile-pic" id="profile-pic" aria-label="User profile picture with icon">
@@ -356,20 +321,66 @@
       document.getElementById('welcomeUser').textContent = name;
     }
 
-    // Static profile data for demo (no live fetching)
+    // Show profile info dynamically
     function showProfile() {
-  const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
-  document.getElementById('profile-name').textContent = currentUser.fullname || currentUser.username || '';
-  document.getElementById('profile-email').textContent = currentUser.email || '';
-  document.getElementById('profile-phone').textContent = currentUser.phone || '';
-  document.getElementById('profile-address').textContent = currentUser.address || '';
-}
-
-
-    function startEdit(field) {
-      alert('Profile editing is currently disabled for demo.');
+      const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+      document.getElementById('profile-name').textContent = currentUser.fullname || currentUser.username || '';
+      document.getElementById('profile-email').textContent = currentUser.email || '';
+      document.getElementById('profile-phone').textContent = currentUser.phone || '';
+      document.getElementById('profile-address').textContent = currentUser.address || '';
     }
 
+    // Edit/save profile fields
+    function startEdit(field) {
+      const row = document.getElementById(field + '-row');
+      const span = row.querySelector('span');
+      const btn = row.querySelector('button');
+
+      if (btn.textContent === 'Edit') {
+        // Edit mode: replace span with input
+        const currentValue = span.textContent;
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = currentValue;
+        input.id = field + '-input';
+        input.style.flexGrow = '1';
+        span.replaceWith(input);
+        btn.textContent = 'Save';
+      } else {
+        // Save mode
+        const input = document.getElementById(field + '-input');
+        const newValue = input.value.trim();
+        if (newValue === '') {
+          alert('Value cannot be empty.');
+          return;
+        }
+
+        // Update currentUser in localStorage
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+        // For name, map to fullname
+        if (field === 'name') {
+          currentUser.fullname = newValue;
+        } else {
+          currentUser[field] = newValue;
+        }
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+        // Update UI
+        const newSpan = document.createElement('span');
+        newSpan.id = (field === 'name' ? 'profile-name' : 'profile-' + field);
+        newSpan.textContent = newValue;
+        input.replaceWith(newSpan);
+
+        btn.textContent = 'Edit';
+
+        // Update welcome and nav username if name changed
+        if (field === 'name') {
+          showUsername();
+        }
+      }
+    }
+
+    // Logout button logic
     document.getElementById('logoutBtn').addEventListener('click', () => {
       localStorage.removeItem('currentUser');
       window.location.href = 'login.html';
