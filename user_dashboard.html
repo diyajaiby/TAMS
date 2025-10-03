@@ -357,19 +357,14 @@
     }
 
     // Static profile data for demo (no live fetching)
-    const profileData = {
-      name: 'deepak',
-      email: 'deepak@gmail.com',
-      phone: '8542367891',
-      address: 'Kerala'
-    };
-
     function showProfile() {
-      document.getElementById('profile-name').textContent = profileData.name;
-      document.getElementById('profile-email').textContent = profileData.email;
-      document.getElementById('profile-phone').textContent = profileData.phone;
-      document.getElementById('profile-address').textContent = profileData.address;
-    }
+  const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+  document.getElementById('profile-name').textContent = currentUser.fullname || currentUser.username || '';
+  document.getElementById('profile-email').textContent = currentUser.email || '';
+  document.getElementById('profile-phone').textContent = currentUser.phone || '';
+  document.getElementById('profile-address').textContent = currentUser.address || '';
+}
+
 
     function startEdit(field) {
       alert('Profile editing is currently disabled for demo.');
