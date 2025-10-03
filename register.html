@@ -116,6 +116,8 @@
       <input type="email" id="email" placeholder="Email" required />
       <input type="password" id="password" placeholder="Password" required />
       <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+      <input type="text" id="phone" placeholder="Phone Number" required />
+      <input type="text" id="address" placeholder="Address" required />
       <button type="submit">REGISTER</button>
     </form>
     <div class="msg" id="msg"></div>
@@ -135,6 +137,8 @@
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
+      const phone = document.getElementById('phone').value.trim();
+      const address = document.getElementById('address').value.trim();
 
       if (password !== confirmPassword) {
         msg.style.color = "red";
@@ -152,7 +156,7 @@
       }
 
       // Save user
-      const newUser = { fullname, username, email, password };
+      const newUser = { fullname, username, email, password, phone, address };
       users.push(newUser);
       localStorage.setItem('users', JSON.stringify(users));
 
@@ -165,8 +169,8 @@
         profile: {
           name: fullname,
           email: email,
-          phone: '',
-          address: ''
+          phone: phone,
+          address: address
         }
       };
       localStorage.setItem('dashboard_' + username, JSON.stringify(dashboardData));
