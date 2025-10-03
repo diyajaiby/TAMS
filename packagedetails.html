@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Package Details - TripCore</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --blue-primary: #265aaa;
+      --blue-dark: #22466b;
+      --accent: #fcbc31;
+      --white: #fff;
+      --bg-light: #f8f9fa;
+    }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--blue-dark);
+      color: var(--blue-dark);
+    }
+    .navbar {
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      height: 60px;
+      padding: 0 20px;
+      box-shadow: 0 4px 14px rgba(34, 70, 107, 0.2);
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      box-sizing: border-box;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--blue-primary);
+    }
+    .logo img {
+      height: 40px;
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: 0 0 6px var(--accent);
+    }
+    .nav-links {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+    .nav-links a {
+      color: var(--blue-dark);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 8px 12px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      background-color: var(--blue-primary);
+      color: var(--white);
+      outline: none;
+    }
+    .nav-links a.active {
+      pointer-events: none;
+      cursor: default;
+    }
+    .user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--blue-primary);
+      user-select: none;
+      cursor: default;
+    }
+    .user i {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--blue-dark);
+      color: var(--white);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      box-shadow: 0 0 8px var(--accent);
+    }
+    .main-content {
+      max-width: 1100px;
+      background: var(--bg-light);
+      margin: 30px auto 40px;
+      padding: 30px 20px 40px 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 18px rgba(29, 38, 54, 0.18);
+      box-sizing: border-box;
+      color: var(--blue-dark);
+      user-select: none;
+    }
+    h1 {
+      text-align: center;
+      font-weight: 700;
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+      letter-spacing: 0.05em;
+    }
+    .package-panel {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 24px 30px 36px 30px;
+      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+      align-items: flex-start;
+      color: var(--blue-dark);
+      text-align: left;
+      min-height: 320px;
+    }
+    .package-panel img {
+      max-width: 320px;
+      height: auto;
+      border-radius: 12px;
+      object-fit: cover;
+      user-select: none;
+    }
+    .package-info {
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 0 12px;
+    }
+    .package-info h2 {
+      font-size: 2rem;
+      font-weight: 900;
+      margin: 0 0 12px 0;
+      color: var(--blue-primary);
+    }
+    .package-info p {
+      font-size: 1.1rem;
+      margin: 6px 0;
+    }
+    .btn-container {
+      margin-top: 22px;
+      display: flex;
+      gap: 16px;
+    }
+    .btn {
+      font-weight: 700;
+      border-radius: 24px;
+      padding: 12px 28px;
+      cursor: pointer;
+      border: none;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    .btn-back {
+      background-color: #cce5ff;
+      color: var(--blue-dark);
+    }
+    .btn-back:hover {
+      background-color: #a0d2ff;
+    }
+    .btn-book {
+      background-color: var(--blue-primary);
+      color: var(--white);
+    }
+    .btn-book:hover {
+      background-color: #184070;
+    }
+    @media (max-width: 768px) {
+      .package-panel {
+        flex-direction: column;
+        align-items: center;
+      }
+      .package-info {
+        max-width: 100%;
+        text-align: center;
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="images/tripcore.jpg" alt="TripCore" />
+      TripCore
+    </div>
+    <div class="nav-links" id="navLinks">
+      <!-- dynamic nav links -->
+    </div>
+    <div class="user" id="userDisplay">
+      <i class="fas fa-user"></i>
+      <span id="usernameSpan">Guest</span>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <h1>Package Details</h1>
+    <div class="package-panel" id="packagePanel">
+      <!-- Package details dynamically loaded here -->
+    </div>
+  </div>
+
+  <script>
+    function getPackagesFromLocalStorage() {
+      const packagesJSON = localStorage.getItem('packages');
+      return packagesJSON ? JSON.parse(packagesJSON) : [];
+    }
+
+    function getCurrentUser() {
+      return JSON.parse(localStorage.getItem('currentUser'));
+    }
+
+    function getPackageIdFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('id');
+    }
+
+    function renderNavbar() {
+      const navLinks = document.getElementById('navLinks');
+      const userDisplay = document.getElementById('userDisplay');
+      const usernameSpan = document.getElementById('usernameSpan');
+      const currentUser = getCurrentUser();
+
+      if (currentUser) {
+        usernameSpan.textContent = currentUser.fullname || currentUser.username || 'User';
+
+        navLinks.innerHTML = `
+          <a href="user_dashboard.html" class="nav-link">Home</a>
+          <a href="browsepackage.html" class="nav-link active">Browse Packages</a>
+          <a href="user_mybookings.html" class="nav-link">My Bookings</a>
+          <a href="user_support.html" class="nav-link">Support</a>
+        `;
+      } else {
+        usernameSpan.textContent = 'Guest';
+
+        navLinks.innerHTML = `
+          <a href="homepage.html" class="nav-link">Home</a>
+          <a href="browsepackage.html" class="nav-link active">Browse Packages</a>
+          <a href="contactus.html" class="nav-link">Contact Us</a>
+          <a href="about.html" class="nav-link">About Us</a>
+          <a href="login.html" class="nav-link">Login</a>
+        `;
+      }
+    }
+
+    function renderPackageDetails() {
+  const packagePanel = document.getElementById('packagePanel');
+  const packages = getPackagesFromLocalStorage();
+  const id = getPackageIdFromURL();
+  const pkg = packages.find(p => p.id === id);
+  const currentUser = getCurrentUser();
+
+  if (!pkg) {
+    packagePanel.innerHTML = `
+      <h2>Package not found</h2>
+      <div class="btn-container">
+        <button class="btn btn-back" onclick="window.location.href='browsepackage.html'">Back to Packages</button>
+        <button class="btn btn-book" onclick="window.location.href='login.html'">Login to Book</button>
+      </div>
+    `;
+    return;
+  }
+
+  // If logged in, show book.html link, else disable button and prompt to login
+  const bookButton = currentUser 
+    ? `<button class="btn btn-book" onclick="window.location.href='book.html?id=${pkg.id}'">Book Now</button>`
+    : `<button class="btn btn-book" disabled title="Login to book" style="cursor: not-allowed; opacity: 0.6;">Book Now (Login required)</button>`;
+
+  packagePanel.innerHTML = `
+    <img src="${pkg.image || 'https://via.placeholder.com/320x220?text=No+Image'}" alt="${pkg.name}" />
+    <div class="package-info">
+      <h2>${pkg.name}</h2>
+      <p><strong>Destination:</strong> ${pkg.destination || '-'}</p>
+      <p><strong>Duration:</strong> ${pkg.duration || '-'}</p>
+      <p><strong>Price:</strong> ₹${Number(pkg.price).toLocaleString()}</p>
+      <p><strong>Status:</strong> ${pkg.status || 'Active'}</p>
+      <div class="btn-container">
+        <button class="btn btn-back" onclick="window.location.href='browsepackage.html'">Back to Packages</button>
+        ${bookButton}
+      </div>
+    </div>
+  `;
+}
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderNavbar();
+      renderPackageDetails();
+    });
+  </script>
+</body>
+</html>

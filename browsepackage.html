@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Browse Packages - TripCore</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --blue-primary: #265aaa;
+      --blue-dark: #22466b;
+      --accent: #fcbc31;
+      --white: #fff;
+      --bg-light: #f8f9fa;
+      --shadow-light: rgba(34, 70, 107, 0.15);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', Arial, sans-serif; }
+    body { background-color: var(--blue-dark); margin: 0; }
+    .navbar {
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      padding: 0 30px;
+      height: 60px;
+      box-shadow: 0 4px 14px var(--shadow-light);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100vw;
+      left: 0;
+      justify-content: space-between;
+    }
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--blue-primary);
+      user-select: none;
+    }
+    .navbar .logo img {
+      height: 40px;
+      border-radius: 8px;
+      box-shadow: 0 0 6px var(--accent);
+      background: var(--white);
+    }
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      flex-grow: 1;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.125rem;
+      color: var(--blue-dark);
+      padding: 8px 12px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      transition: background-color 0.3s, color 0.3s;
+      user-select: none;
+      cursor: pointer;
+    }
+    .nav-links a:hover,
+    .nav-links a:focus {
+      background-color: var(--blue-primary);
+      color: var(--white);
+      outline: none;
+    }
+    .nav-links a.active {
+      background-color: var(--blue-primary);
+      color: var(--white);
+      pointer-events: none;
+      cursor: default;
+    }
+    .user-box {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-left: 20px;
+      font-weight: 700;
+      color: var(--blue-dark);
+      user-select: none;
+    }
+    .user-box i.fas.fa-user {
+      font-size: 22px;
+      color: var(--blue-primary);
+    }
+    #usernameDisplay {
+      font-size: 1rem;
+      user-select: none;
+      margin-right: 8px;
+    }
+    #logoutBtn {
+      background-color: var(--blue-primary);
+      color: var(--white);
+      border: none;
+      border-radius: 24px;
+      padding: 6px 18px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    #logoutBtn:hover {
+      background-color: var(--blue-dark);
+    }
+
+    h1 {
+      text-align: center;
+      margin: 30px 0 20px 0;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 2px;
+    }
+    .package-list {
+      max-width: 1100px;
+      margin: 0 auto 40px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 0 20px;
+    }
+    .package-card {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .package-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+    .package-content {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 1;
+    }
+    .package-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--blue-dark);
+    }
+    .package-description {
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+      color: #546e97;
+      flex-grow: 1;
+    }
+    .package-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .package-price {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--blue-primary);
+    }
+    button.view-details-btn {
+      background: var(--blue-primary);
+      color: var(--white);
+      padding: 10px 20px;
+      border: none;
+      border-radius: 24px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background 0.3s;
+    }
+    button.view-details-btn:hover {
+      background: #133c7a;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar" id="navbar">
+    <!-- Navbar content will be injected by JS -->
+  </div>
+
+  <h1>Browse Packages</h1>
+  <div class="package-list" id="package-list"></div>
+
+  <script>
+    function loadCurrentUser() {
+      return JSON.parse(localStorage.getItem('currentUser'));
+    }
+
+    function renderNavbar() {
+      const navbar = document.getElementById('navbar');
+      const currentUser = loadCurrentUser();
+
+      if (currentUser) {
+        // User is logged in - show user navbar
+        navbar.innerHTML = `
+          <div class="logo">
+            <img src="images/tripcore.jpg" alt="TripCore Logo" /> TripCore
+          </div>
+          <div class="nav-links">
+            <a href="user_dashboard.html">Home</a>
+            <a href="browsepackage.html" class="active">Browse Packages</a>
+            <a href="user_mybookings.html">My Bookings</a>
+            <a href="user_support.html">Support</a>
+          </div>
+          <div class="user-box">
+            <i class="fas fa-user"></i>
+            <span id="usernameDisplay">${currentUser.fullname || currentUser.username || 'User'}</span>
+            <button id="logoutBtn">
+              <i class="fas fa-sign-out-alt"></i> Log Out
+            </button>
+          </div>
+        `;
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+          localStorage.removeItem('currentUser');
+          window.location.href = 'login.html';
+        });
+      } else {
+        // Guest user navbar
+        navbar.innerHTML = `
+          <div class="logo">
+            <img src="images/tripcore.jpg" alt="TripCore Logo" /> TripCore
+          </div>
+          <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="browsepackage.html" class="active">Browse Packages</a>
+            <a href="contactus.html">Contact Us</a>
+            <a href="aboutus.html">About Us</a>
+            <a href="login.html">Login</a>
+          </div>
+        `;
+      }
+    }
+
+    function fixImagePath(imagePath) {
+      if (!imagePath) return 'images/default.jpg'; // fallback image
+      if (imagePath.includes('\\')) {
+        const parts = imagePath.split(/[/\\]/);
+        const filename = parts[parts.length - 1];
+        return 'images/' + filename;
+      }
+      return imagePath;
+    }
+
+    function viewDetails(packageId) {
+      window.location.href = `packagedetails.html?id=${encodeURIComponent(packageId)}`;
+    }
+
+    function loadPackages() {
+      const container = document.getElementById('package-list');
+      container.innerHTML = '';
+      let packages = JSON.parse(localStorage.getItem('packages')) || [];
+
+      let updated = false;
+      packages = packages.map(pkg => {
+        const fixedImage = fixImagePath(pkg.image);
+        if (fixedImage !== pkg.image) updated = true;
+        return {...pkg, image: fixedImage};
+      });
+      if (updated) {
+        localStorage.setItem('packages', JSON.stringify(packages));
+      }
+
+      if (packages.length === 0) {
+        container.innerHTML = '<div style="color:#fff; text-align:center; font-size:1.3rem; margin-top:32px;">No packages available.</div>';
+        return;
+      }
+
+      packages.forEach((pkg, index) => {
+        if (!pkg.id) pkg.id = index;
+        const card = document.createElement('div');
+        card.className = 'package-card';
+        card.innerHTML = `
+          <img src="${pkg.image}" alt="${pkg.name}" />
+          <div class="package-content">
+            <h2 class="package-title">${pkg.name}</h2>
+            <p class="package-description">${pkg.description || '-'}</p>
+            <div class="package-footer">
+              <div class="package-price">₹${Number(pkg.price).toLocaleString()}</div>
+              <button class="view-details-btn" onclick="viewDetails('${pkg.id}')">View Details</button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderNavbar();
+      loadPackages();
+    });
+  </script>
+</body>
+</html>

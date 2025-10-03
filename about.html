@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Us - TripCore</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --blue-primary: #265aaa;
+      --blue-dark: #22466b;
+      --accent: #fcbc31;
+      --white: #fff;
+      --bg-dark: #22466b;
+      --text-light: #d5e7ff;
+      --shadow: rgba(0, 0, 0, 0.15);
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Navbar consistent style */
+    .navbar {
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      height: 60px;
+      box-shadow: 0 4px 14px rgba(34, 70, 107, 0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100vw;
+      left: 0;
+      justify-content: space-between;
+    }
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--blue-primary);
+    }
+    .navbar .logo img {
+      height: 40px;
+      border-radius: 8px;
+      box-shadow: 0 0 6px var(--accent);
+      background: var(--white);
+    }
+    .navbar nav {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+    .navbar nav a {
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.125rem;
+      color: var(--blue-dark);
+      padding: 8px 12px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .navbar nav a:hover,
+    .navbar nav a:focus {
+      background-color: var(--blue-primary);
+      color: var(--white);
+      outline: none;
+    }
+    .navbar nav a.active {
+      background-color: var(--blue-primary);
+      color: var(--white);
+      pointer-events: none;
+      cursor: default;
+    }
+    .navbar .user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--blue-primary);
+      cursor: default;
+      user-select: none;
+    }
+    .navbar .user i {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--blue-dark);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 0 8px var(--accent);
+    }
+    main {
+      flex-grow: 1;
+      padding: 50px 7vw;
+      max-width: 1020px;
+      margin: 40px auto 60px auto;
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.1);
+      color: var(--blue-dark);
+    }
+    h1.headline {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: var(--blue-primary);
+      margin-bottom: 40px;
+      user-select: none;
+      text-align: center;
+    }
+    section.about-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 36px;
+      align-items: flex-start;
+    }
+    .text-column, .image-column {
+      flex: 1 1 320px;
+      min-width: 300px;
+    }
+    .text-column h2 {
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+      font-weight: 700;
+      color: var(--blue-primary);
+      user-select: none;
+    }
+    .text-column p, .text-column ul {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .text-column ul {
+      padding-left: 24px;
+      color: var(--blue-dark);
+    }
+    .text-column ul li {
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .image-column img {
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px var(--shadow);
+      margin-bottom: 16px;
+    }
+    .btn-explore {
+      display: block;
+      background-color: var(--blue-primary);
+      color: var(--white);
+      border: none;
+      border-radius: 36px;
+      padding: 18px 40px;
+      font-weight: 800;
+      font-size: 1.25rem;
+      cursor: pointer;
+      box-shadow: 0 8px 26px rgba(38, 60, 126, 0.7);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin: 0 auto;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      user-select: none;
+      max-width: 260px;
+    }
+    .btn-explore:hover {
+      background-color: var(--blue-dark);
+      box-shadow: 0 10px 36px rgba(19, 60, 122, 0.85);
+    }
+    @media (max-width: 900px) {
+      section.about-section {
+        flex-direction: column;
+      }
+      .text-column, .image-column {
+        min-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">
+    <img src="images/tripcore.jpg" alt="TripCore Logo" />
+    TripCore
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="browsepackage.html">Browse Pacakages</a>
+    <a href="contactus.html">Contact Us</a>
+    <a href="about.html" class="active">About Us</a>
+    <a href="login.html">Login</a>
+  </nav>
+  <div class="user">
+    <i class="fas fa-user"></i>
+    <span id="usernameDisplay">Guest</span>
+  </div>
+</header>
+
+<main>
+  <h1 class="headline">About Us</h1>
+  <section class="about-section">
+    <div class="text-column">
+      <h2>Our Mission</h2>
+      <p>
+        At TripCore, we are passionate about transforming travel dreams into unforgettable experiences. Our mission is to provide seamless, personalized, and affordable travel solutions that connect adventurers to the world’s most captivating destinations.
+      </p>
+
+      <h2>Our Story</h2>
+      <p>
+        Founded by travel enthusiasts who believe that exploration enriches life, TripCore started as a small startup with a vision to simplify travel planning. Over the years, we have grown into a trusted platform serving thousands of travelers worldwide with tailor-made packages and exceptional customer support.
+      </p>
+
+      <h2>Our Values</h2>
+      <ul>
+        <li>✔ Commitment to exceptional customer service</li>
+        <li>✔ Dedication to sustainable and responsible travel</li>
+        <li>✔ Supporting local communities and cultures</li>
+        <li>✔ Innovation and transparency in our services</li>
+      </ul>
+
+      <h2>Meet Our Team</h2>
+      <p>
+        Our team comprises expert travel planners, passionate explorers, and dedicated customer service professionals who work tirelessly to craft your perfect journey and ensure a smooth travel experience.
+      </p>
+
+      <h2>Join Us on Your Next Adventure</h2>
+      <p>
+        Whether you are seeking adventure, relaxation, or cultural immersion, TripCore is your reliable partner. Start planning your next trip with us today and let the journey begin!
+      </p>
+
+      <button class="btn-explore" onclick="window.location.href='browsepackage.html'">Explore Packages</button>
+    </div>
+    <div class="image-column">
+      <img src="images/tr1.jpg" alt="Travel group enjoying adventure" />
+      <img src="images/tr2.jpg" alt="Travel group enjoying adventure" />
+    </div>
+  </section>
+</main>
+
+<script>
+  // Show current user name or Guest
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  const usernameDisplay = document.getElementById('usernameDisplay');
+  usernameDisplay.textContent = currentUser?.fullname || currentUser?.username || 'Guest';
+</script>
+
+</body>
+</html>

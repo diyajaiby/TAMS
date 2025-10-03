@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Notifications - User Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    body {
+      margin:0; font-family:'Montserrat',Arial,sans-serif; background:#42618a; color:#222;
+    }
+    .navbar {
+      background:#fff; display:flex;align-items:center; height:54px;
+      font-size:20px; padding:0 22px; box-sizing:border-box;
+    }
+    .logo {
+      display:flex;align-items:center; margin-right:20px;font-size:18px;color:#0d355f;
+    }
+    .logo img {height:30px; margin-right:7px;}
+    .nav-link{ color:#283c56; text-decoration:none;margin-right:32px; font-weight:500; background:none; border:none; cursor:pointer;}
+    .nav-link:last-child {margin-right:0;}
+    .user-minipic{margin-left:auto;display:flex;align-items:center;gap:6px;}
+    .user-minipic i{color:#248aed;font-size:27px;}
+    .main-content {
+      max-width: 900px; margin:34px auto 0 auto; padding:0 0 40px 0;
+      background: #6e8db1; border-radius: 32px;
+      box-shadow: 0 2px 16px #27334a40;
+      min-height: 400px;
+    }
+    .headline {
+      text-align:center; font-size:2rem; font-weight:700; color:#fff;letter-spacing:.5px;padding-top:28px;
+    }
+    .notif-container {
+      background: #eff2f9; border-radius: 18px; max-width: 720px; margin: 34px auto 0 auto; padding: 24px 28px 10px 34px;
+      box-shadow: 0 3px 12px #17334a1a;
+    }
+    .notif-list {list-style:none;padding:0;margin:0;}
+    .notif-item {
+      display:flex; align-items:flex-start; gap:16px;
+      border-bottom:1px solid #dae6fa;
+      padding:15px 0;font-size:1.14rem; line-height:1.4;
+      background: none;
+      position: relative;
+    }
+    .notif-item:last-child {border-bottom:none;}
+    .notif-icon {
+      font-size:1.55em; min-width:30px; margin-top:2px;
+    }
+    .notif-icon.success {color:#22be45;}
+    .notif-icon.money {color:#1677eb;}
+    .notif-icon.info {color:#fd9803;}
+    .notif-icon.warn {color:#e74c3c;}
+    .notif-meta {
+      color:#879; font-size:.93em; margin-left:8px; display:block;
+    }
+    .notif-link {
+      color: #248aed; text-decoration: underline; margin-left:10px;font-size:1em;
+    }
+    .notif-badge {display:inline-block;background:#fd9803;color:#fff;border-radius:8px;padding:2px 8px;font-size:.93em; margin-left:7px;}
+    .notif-delete{
+      position:absolute;right:0;top:14px;background:none;border:none;color:#999;cursor:pointer;font-size:1.16em;transition:color .15s;
+    }
+    .notif-delete:hover{color:#e74c3c;}
+    @media (max-width:600px) {
+      .main-content {border-radius:16px;}
+      .headline {font-size:1.25rem;}
+      .notif-container {padding:5px 8px 4px 8px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo">
+      <img src="https://i.imgur.com/y6lBBmA.png" alt="TripCore"/>
+      <b>TripCore</b>
+    </div>
+    <a href="#" class="nav-link">HOME</a>
+    <a href="#" class="nav-link">BROWSE PACKAGES</a>
+    <a href="#" class="nav-link">MY BOOKINGS</a>
+    <a href="#" class="nav-link">WISHLIST</a>
+    <a href="#" class="nav-link">NOTIFICATIONS</a>
+    <a href="#" class="nav-link">SUPPORT</a>
+    <div class="user-minipic"><i class="fas fa-user-circle"></i> User</div>
+  </div>
+  <div class="main-content">
+    <div class="headline">Notifications <span class="notif-badge">4</span></div>
+    <div class="notif-container">
+      <ul class="notif-list">
+        <li class="notif-item">
+          <span class="notif-icon success"><i class="fa fa-check-circle"></i></span>
+          <div>
+            Your Goa trip is <b>confirmed</b>!
+            <span class="notif-meta">(Received: Today, 10:00 AM)</span>
+          </div>
+          <button class="notif-delete" title="Delete">&#10006;</button>
+        </li>
+        
+        <li class="notif-item">
+          <span class="notif-icon info"><i class="fa fa-tag"></i></span>
+          <div>
+            New discount — <b>10% off</b> on <b>Meghalaya Discovery!</b>
+            <a href="#" class="notif-link">Book Now</a>
+            <span class="notif-meta">(Received: 20 Aug, 7:45 PM)</span>
+          </div>
+          <button class="notif-delete" title="Delete">&#10006;</button>
+        </li>
+        <li class="notif-item">
+          <span class="notif-icon warn"><i class="fa fa-exclamation-circle"></i></span>
+          <div>
+            <b>Reminder:</b> Upload ID proof for Goa trip before 24 Aug.
+            <span class="notif-meta">(Received: 19 Aug, 6:10 PM)</span>
+          </div>
+          <button class="notif-delete" title="Delete">&#10006;</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

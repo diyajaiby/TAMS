@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Support & Help - User Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --blue-dark: #22466b;
+      --blue-primary: #265aaa;
+      --accent: #fcbc31;
+      --white: #fff;
+      --bg-light: #f8f9fa;
+      --input-bg: #e6ecf7;
+      --input-border: #c8d0e8;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', Arial, sans-serif;
+    }
+    body {
+      background-color: var(--blue-primary);
+      color: var(--blue-dark);
+      min-height: 100vh;
+      margin: 0; padding: 0;
+      display: flex; flex-direction: column; align-items: center;
+    }.navbar {
+      background: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 60px;
+      width: 100vw;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0 30px;
+      box-shadow: 0 4px 14px var(--shadow-light);
+      box-sizing: border-box;
+    }
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--blue-primary);
+    }
+    .navbar .logo img {
+      height: 40px;
+      border-radius: 8px;
+      box-shadow: 0 0 6px var(--accent);
+      background: var(--white);
+    }
+    .navbar .nav-links {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      gap: 36px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .navbar .nav-links a {
+      text-decoration: none;
+      color: var(--blue-dark);
+      font-size: 1.05rem;
+      padding: 10px 14px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      text-transform: uppercase;
+      user-select: none;
+      cursor: pointer;
+    }
+    .navbar .nav-links a:hover,
+    .navbar .nav-links a:focus,
+    .navbar .nav-links a.active {
+      background-color: var(--blue-primary);
+      color: var(--white);
+      outline: none;
+    }
+    .navbar .nav-links a.active {
+      pointer-events: none;
+      cursor: default;
+    }
+    .nav-user {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--blue-dark);
+      user-select: none;
+    }
+    .nav-user i {
+      font-size: 22px;
+      color: var(--blue-primary);
+    }
+    #logoutBtn {
+      background-color: var(--blue-primary);
+      color: var(--white);
+      border: none;
+      border-radius: 28px;
+      padding: 8px 22px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      font-size: 1rem;
+    }
+    #logoutBtn:hover {
+      background-color: var(--blue-dark);
+    }
+    main {
+      flex-grow: 1;
+      max-width: 640px;
+      width: 100%;
+      background: var(--blue-dark);
+      border-radius: 24px;
+      padding: 32px 36px;
+      margin-top: 48px;
+      box-shadow: 0 8px 28px rgba(26, 37, 64, 0.8);
+      color: var(--blue-dark);
+      box-sizing: border-box;
+    }
+    main .headline {
+      font-size: 2.6rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 32px;
+      user-select: none;
+      color: var(--white);
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    label {
+      font-weight: 600;
+      color: #e0e8ff;
+      user-select: none;
+    }
+    input.form-input, textarea.form-textarea {
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      background-color: var(--input-bg);
+      color: var(--blue-dark);
+      font-family: 'Montserrat', Arial, sans-serif;
+      transition: box-shadow 0.3s ease;
+      outline: none;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+    input.form-input:focus, textarea.form-textarea:focus {
+      box-shadow: 0 0 12px var(--blue-primary);
+    }
+    textarea.form-textarea {
+      min-height: 120px;
+    }
+    button.action-btn {
+      background-color: var(--accent);
+      border: none;
+      border-radius: 28px;
+      padding: 14px 42px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color: var(--blue-dark);
+      box-shadow: 0 6px 15px #fcc640aa;
+      user-select: none;
+      transition: all 0.3s ease;
+      align-self: center;
+      margin-top: 12px;
+    }
+    button.action-btn:hover {
+      background-color: #d4a021;
+      box-shadow: 0 8px 18px #d4a021cc;
+      color: #fff;
+    }
+    .contact-info {
+      margin-top: 30px;
+      text-align: center;
+      color: #a7bfdd;
+      font-size: 1.05rem;
+      user-select: none;
+    }
+    .contact-info p {
+      margin: 8px 0;
+    }
+    @media (max-width: 720px) {
+      main {
+        max-width: 90vw;
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="logo">
+      <img src="images/tripcore.jpg" alt="TripCore"/>
+      <b>TripCore</b>
+    </div>
+    <div class="nav-links">
+      <a href="user_dashboard.html" class="nav-link">HOME</a>
+      <a href="browsepackage.html" class="nav-link">BROWSE PACKAGES</a>
+      <a href="user_mybookings.html" class="nav-link">MY BOOKINGS</a>
+      <!--a href="user_wishlist.html" class="nav-link">WISHLIST</a-->
+      <!--a href="user_notifications.html" class="nav-link">NOTIFICATIONS</a-->
+      <a href="user_support.html" class="nav-link active">SUPPORT</a>
+    </div>
+     <button class="nav-link" id="logoutBtn">
+      <i class="fas fa-sign-out-alt"></i> Log Out
+    </button>
+    <div class="nav-user">
+      <i class="fas fa-user"></i><span id="usernameDisplay">User</span>
+    </div>
+  </div>
+
+  <main>
+    <div class="headline">Contact Us</div>
+    <section>
+      <p>Feel free to reach out to the TripCore team with your questions, feedback, or support requests!</p>
+      <form id="contactForm">
+        <label for="name">Your Name*</label>
+        <input type="text" id="name" class="form-input" placeholder="Enter your name" required />
+
+        <label for="email">Your Email*</label>
+        <input type="email" id="email" class="form-input" placeholder="Enter your email" required />
+
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" class="form-input" placeholder="Subject" />
+
+        <label for="message">Message*</label>
+        <textarea id="message" class="form-textarea" placeholder="Your message..." required></textarea>
+
+        <button type="submit" class="action-btn">Send Message</button>
+      </form>
+      <div class="contact-info" aria-live="polite" id="formMessage" role="alert"></div>
+    </section>
+  </main>
+
+  <script>
+    // Show current user or Guest
+    const usernameDisplay = document.getElementById('usernameDisplay');
+    let currentUser = null;
+    try {
+      currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    } catch {}
+    usernameDisplay.textContent = currentUser?.fullname || currentUser?.name || currentUser?.username || 'Guest';
+
+    // Logout button functionality
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('currentUser');
+      window.location.href = 'login.html';
+    });
+
+    // Handle contact form submit
+    const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
+
+    contactForm.addEventListener('submit', e => {
+      e.preventDefault();
+
+      if (!contactForm.checkValidity()) {
+        formMessage.textContent = 'Please fill all required fields correctly.';
+        formMessage.style.color = 'red';
+        return;
+      }
+
+      // Gather form data
+      const messageData = {
+        id: 'msg_' + Date.now(),
+        name: contactForm.name.value.trim(),
+        email: contactForm.email.value.trim(),
+        subject: contactForm.subject.value.trim(),
+        message: contactForm.message.value.trim(),
+        timestamp: new Date().toISOString()
+      };
+
+      // Get existing messages or set new array
+      let messages = [];
+      try {
+        messages = JSON.parse(localStorage.getItem('supportMessages')) || [];
+      } catch {
+        messages = [];
+      }
+      messages.push(messageData);
+
+      // Save updated messages array to localStorage
+      localStorage.setItem('supportMessages', JSON.stringify(messages));
+
+      formMessage.style.color = 'lightgreen';
+      formMessage.textContent = 'Thank you! Your message has been saved. We will get back to you shortly.';
+
+      contactForm.reset();
+    });
+  </script>
+
+</body>
+</html>

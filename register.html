@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Register - TripCore</title>
+  <style>
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: linear-gradient(135deg, #22466b, #16305f);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      background: #1e3a7a;
+      background: linear-gradient(145deg, #2a5298, #1a355f);
+      padding: 40px 36px 44px 36px;
+      border-radius: 16px;
+      width: 360px;
+      box-shadow: 0 16px 30px rgb(16 40 71 / 40%);
+      text-align: center;
+      transition: box-shadow 0.3s ease;
+    }
+    .container:hover {
+      box-shadow: 0 24px 50px rgb(16 40 71 / 55%);
+    }
+    h2 {
+      margin-bottom: 36px;
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: 1.2px;
+      text-shadow: 0 2px 6px rgba(45, 77, 136, 0.75);
+      user-select: none;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 14px 16px;
+      margin: 12px 0 18px 0;
+      border-radius: 12px;
+      border: none;
+      font-size: 1.05rem;
+      font-weight: 600;
+      background-color: rgba(255,255,255,0.15);
+      color: #fbfbfb;
+      box-shadow: inset 1px 1px 3px rgba(255,255,255,0.4),
+                  inset -1px -1px 4px rgba(0,0,0,0.2);
+      transition: background-color 0.3s, box-shadow 0.3s;
+      user-select: text;
+    }
+    input::placeholder {
+      color: #d4d9e2;
+      opacity: 0.9;
+    }
+    input:focus {
+      outline: none;
+      background-color: rgba(255,255,255,0.3);
+      box-shadow: 0 0 8px 1px #6a9cf7;
+      color: #fff;
+    }
+    button {
+      width: 100%;
+      padding: 16px 0;
+      margin-top: 24px;
+      border: none;
+      border-radius: 28px;
+      background: linear-gradient(45deg, #4bb543, #2dd92d);
+      color: #fff;
+      font-size: 1.3rem;
+      font-weight: 900;
+      letter-spacing: 0.07em;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(33, 140, 57, 0.7);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    button:hover {
+      background: linear-gradient(45deg, #40a036, #23b224);
+      box-shadow: 0 12px 28px rgba(13, 112, 48, 0.9);
+    }
+    .msg {
+      margin-top: 20px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      height: 1.2em;
+      user-select: none;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+    }
+    a {
+      display: block;
+      margin-top: 28px;
+      color: #a8d1aa;
+      text-decoration: underline;
+      font-weight: 600;
+      font-size: 1.05rem;
+      user-select: none;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: #d2f8b0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Create Account</h2>
+    <form id="registerForm">
+      <input type="text" id="fullname" placeholder="Full Name" required />
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+      <button type="submit">REGISTER</button>
+    </form>
+    <div class="msg" id="msg"></div>
+    <a href="login.html">Already have an account? Login</a>
+  </div>
+
+  <script>
+    const registerForm = document.getElementById('registerForm');
+    const msg = document.getElementById('msg');
+
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      msg.textContent = "";
+
+      const fullname = document.getElementById('fullname').value.trim();
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (password !== confirmPassword) {
+        msg.style.color = "red";
+        msg.textContent = "Passwords do not match!";
+        return;
+      }
+
+      let users = JSON.parse(localStorage.getItem('users')) || [];
+
+      // prevent duplicate username or email
+      if (users.some(u => u.username === username || u.email === email)) {
+        msg.style.color = "red";
+        msg.textContent = "Username or Email already exists!";
+        return;
+      }
+
+      // Save user
+      const newUser = { fullname, username, email, password };
+      users.push(newUser);
+      localStorage.setItem('users', JSON.stringify(users));
+
+      // Create default dashboard data for this user
+      const dashboardData = {
+        upcomingTrips: [],
+        totalBookings: 0,
+        lastBooking: '',
+        favorites: [],
+        profile: {
+          name: fullname,
+          email: email,
+          phone: '',
+          address: ''
+        }
+      };
+      localStorage.setItem('dashboard_' + username, JSON.stringify(dashboardData));
+
+      msg.style.color = "lightgreen";
+      msg.textContent = "Registered successfully! Redirecting...";
+
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 1500);
+    });
+  </script>
+</body>
+</html>

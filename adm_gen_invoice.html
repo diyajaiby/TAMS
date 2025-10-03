@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TripCore - Generate Invoice</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --blue-primary: #265aaa;
+      --blue-dark: #22466b;
+      --accent: #fcbc31;
+      --white: #fff;
+      --bg-light: #f8f9fa;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--blue-primary);
+      color: var(--blue-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+    }
+
+    .navbar {
+      background: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 60px;
+      width: 100vw;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0 20px;
+      box-shadow: 0 4px 14px rgba(34, 70, 107, 0.15);
+      box-sizing: border-box;
+    }
+
+    .navbar .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--blue-primary);
+    }
+
+    .navbar .logo img {
+      height: 40px;
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: 0 0 6px var(--accent);
+    }
+
+    .navbar nav {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .navbar nav a {
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.125rem;
+      color: var(--blue-dark);
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      transition: background-color 0.3s, color 0.3s ease;
+    }
+
+    .navbar nav a:hover,
+    .navbar nav a:focus {
+      background-color: var(--blue-primary);
+      color: var(--white);
+      outline: none;
+    }
+
+    .navbar nav a.active {
+      background-color: var(--blue-primary);
+      color: var(--white);
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .nav-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      color: var(--blue-dark);
+      font-size: 1rem;
+      user-select: none;
+    }
+
+    #logoutBtn {
+      background-color: var(--blue-primary);
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 6px 16px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    #logoutBtn:hover {
+      background-color: var(--blue-dark);
+    }
+
+    .main-content {
+      max-width: 1100px;
+      width: 100%;
+      padding: 24px 20px 40px 20px;
+      margin-top: 34px;
+      background: var(--bg-light);
+      border-radius: 12px;
+      box-shadow: 0 4px 18px #1d26362e;
+      color: var(--blue-dark);
+      box-sizing: border-box;
+      min-height: 520px;
+    }
+
+    .panel {
+      border-radius: 12px;
+    }
+
+    .panel-header {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 25px;
+      margin-top: 8px;
+    }
+
+    .invoice-form-wrapper {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 30px 32px 16px 32px;
+      max-width: 96%;
+      margin: 0 auto 20px auto;
+      color: var(--blue-dark);
+      font-size: 1.1rem;
+      box-sizing: border-box;
+    }
+
+    .invoice-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px 24px;
+      margin-bottom: 12px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .form-label {
+      font-weight: 600;
+      margin-left: 2px;
+      margin-bottom: 2px;
+    }
+
+    .form-input {
+      font-family: inherit;
+      border: 1.5px solid #bbbbbb;
+      border-radius: 7px;
+      padding: 9px 10px;
+      font-size: 1.08rem;
+      background: #fff;
+      color: #222;
+    }
+
+    .form-input:focus {
+      outline: 2px solid var(--blue-primary);
+    }
+
+    .action-row {
+      display: flex;
+      justify-content: center;
+      gap: 0px;
+      width: 100%;
+      margin-top: 16px;
+    }
+
+    .btn-generate-invoice {
+      background: var(--blue-primary);
+      color: var(--white);
+      border: none;
+      font-size: 1.16rem;
+      padding: 12px 60px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.14s;
+      max-width: 240px;
+      width: 100%;
+    }
+
+    .btn-generate-invoice:hover {
+      background: #176dc1;
+    }
+
+    .invoice-display {
+      background: var(--white);
+      color: var(--blue-dark);
+      max-width: 600px;
+      margin: 24px auto 0 auto;
+      padding: 24px 28px;
+      border-radius: 16px;
+      border: 3px solid var(--blue-primary);
+      font-family: "Courier New", Courier, monospace;
+      font-size: 1rem;
+      display: none;
+      box-sizing: border-box;
+    }
+
+    .invoice-display h3 {
+      text-align: center;
+      margin-bottom: 24px;
+      color: var(--blue-primary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .invoice-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .invoice-label {
+      font-weight: 700;
+    }
+
+    @media (max-width: 900px) {
+      .invoice-form {
+        grid-template-columns: 1fr;
+      }
+
+      .invoice-form-wrapper {
+        padding: 18px 6px 12px 6px;
+      }
+
+      .action-row {
+        flex-direction: column;
+      }
+
+      .btn-generate-invoice {
+        max-width: 100%;
+      }
+
+      .invoice-display {
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <img src="images/tripcore.jpg" alt="TripCore" />
+      TripCore
+    </div>
+    <nav>
+      <a href="admin.html" class="nav-link">Home</a>
+      <a href="adpackages.html" class="nav-link">Packages</a>
+      <a href="adbooking.html" class="nav-link">Bookings</a>
+      <a href="adm_users.html" class="nav-link">Users</a>
+      <a href="adm_gen_invoice.html" class="nav-link active">Generate Invoices</a>
+      <a href="adm_feedback.html" class="nav-link">View Messages</a>
+      <a href="adm_report.html" class="nav-link">Reports</a>
+    </nav>
+    <div class="nav-user">
+      <i class="fas fa-user-circle"></i>
+      <span id="usernameDisplay">Admin</span>
+      <button id="logoutBtn" title="Logout">LOGOUT</button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="panel">
+      <div class="panel-header">GENERATE INVOICE</div>
+      <div class="invoice-form-wrapper">
+        <form id="invoiceForm" class="invoice-form" autocomplete="off" onsubmit="return false;">
+          <div class="form-group">
+            <label class="form-label" for="invoiceId">Invoice ID</label>
+            <input id="invoiceId" name="invoiceId" class="form-input" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="bookingId">Booking ID</label>
+            <input id="bookingId" name="bookingId" class="form-input" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="customerName">Customer Name</label>
+            <input id="customerName" name="customerName" class="form-input" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="emailId">Email ID</label>
+            <input id="emailId" name="emailId" type="email" class="form-input" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="package">Package</label>
+            <input id="package" name="package" class="form-input" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="travelDate">Travel Date</label>
+            <input id="travelDate" name="travelDate" class="form-input" type="date" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="noOfPersons">No. of Persons</label>
+            <input id="noOfPersons" name="noOfPersons" class="form-input" type="number" min="1" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="totalAmount">Total Amount</label>
+            <input id="totalAmount" name="totalAmount" class="form-input" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="dateOfInvoice">Date of Invoice</label>
+            <input id="dateOfInvoice" name="dateOfInvoice" class="form-input" type="date" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="paymentStatus">Payment Status</label>
+            <input id="paymentStatus" name="paymentStatus" class="form-input" required />
+          </div>
+        </form>
+        <div class="action-row">
+          <button class="btn-generate-invoice" onclick="generateInvoice()">Generate Invoice</button>
+        </div>
+      </div>
+      <div id="invoiceDisplay" class="invoice-display"></div>
+    </div>
+  </main>
+
+  <script>
+    // Display admin username, load from localStorage
+    const usernameDisplay = document.getElementById('usernameDisplay');
+    let adminUser = null;
+    try {
+      adminUser = JSON.parse(localStorage.getItem('adminUser'));
+    } catch { }
+    usernameDisplay.textContent = adminUser?.fullname || adminUser?.username || 'Admin';
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('adminUser');
+      window.location.href = 'login.html';
+    });
+
+    // Load any saved invoice data from localStorage on startup
+    const form = document.getElementById('invoiceForm');
+    window.addEventListener('load', () => {
+      const savedInvoice = localStorage.getItem('savedInvoice');
+      if (savedInvoice) {
+        const data = JSON.parse(savedInvoice);
+        Object.keys(data).forEach(key => {
+          const input = form.elements[key];
+          if(input) input.value = data[key];
+        });
+      }
+    });
+
+    // Generate invoice and display
+    function generateInvoice() {
+      if (!form.checkValidity()) {
+        alert('Please fill all required fields correctly.');
+        return;
+      }
+
+      const formData = new FormData(form);
+      const invoiceDiv = document.getElementById('invoiceDisplay');
+
+      // Save form data to localStorage for persistence
+      const dataToSave = {};
+      formData.forEach((value, key) => dataToSave[key] = value);
+      localStorage.setItem('savedInvoice', JSON.stringify(dataToSave));
+
+      let html = '<h3>Invoice</h3>';
+      const fields = [
+        { label: "Invoice ID", name: "invoiceId" },
+        { label: "Booking ID", name: "bookingId" },
+        { label: "Customer Name", name: "customerName" },
+        { label: "Email ID", name: "emailId" },
+        { label: "Package", name: "package" },
+        { label: "Travel Date", name: "travelDate" },
+        { label: "No. of Persons", name: "noOfPersons" },
+        { label: "Total Amount", name: "totalAmount" },
+        { label: "Date of Invoice", name: "dateOfInvoice" },
+        { label: "Payment Status", name: "paymentStatus" }
+      ];
+
+      fields.forEach(field => {
+        let val = formData.get(field.name);
+        // Format dates to user friendly
+        if (field.name.toLowerCase().includes('date') && val) {
+          val = new Date(val).toLocaleDateString();
+        }
+        html += `<div class="invoice-row"><span class="invoice-label">${field.label}:</span> <span>${val || ''}</span></div>`;
+      });
+
+      invoiceDiv.innerHTML = html;
+      invoiceDiv.style.display = 'block';
+      window.scrollTo({ top: invoiceDiv.offsetTop - 10, behavior: 'smooth' });
+    }
+  </script>
+</body>
+
+</html>

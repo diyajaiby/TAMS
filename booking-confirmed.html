@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Booking Confirmed - TripCore</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --blue-primary: #265aaa;
+      --blue-dark: #22466b;
+      --accent: #fcbc31;
+      --white: #fff;
+      --shadow: rgba(0, 0, 0, 0.15);
+      --text-dark: #21314f;
+      --shadow-light: rgba(34, 70, 107, 0.1);
+      --bg-light: #f8f9fa;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    body {
+      background-color: var(--blue-dark);
+      color: var(--text-dark);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .navbar {
+      background: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 60px;
+      width: 100vw;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0 30px;
+      box-shadow: 0 4px 14px var(--shadow-light);
+      box-sizing: border-box;
+    }
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--blue-primary);
+      user-select: none;
+    }
+    .navbar .logo img {
+      height: 40px;
+      border-radius: 8px;
+      box-shadow: 0 0 6px var(--accent);
+      background: var(--white);
+    }
+    .navbar .nav-links {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      gap: 36px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .navbar .nav-links a {
+      text-decoration: none;
+      color: var(--blue-dark);
+      font-size: 1rem;
+      padding: 10px 14px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      text-transform: uppercase;
+      user-select: none;
+      cursor: pointer;
+    }
+    .navbar .nav-links a:hover,
+    .navbar .nav-links a:focus,
+    .navbar .nav-links a.active {
+      background-color: var(--blue-primary);
+      color: var(--white);
+      outline: none;
+    }
+    .navbar .nav-links a.active {
+      pointer-events: none;
+      cursor: default;
+    }
+    .nav-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: 16px;
+      font-weight: 700;
+      color: var(--blue-dark);
+      font-size: 1rem;
+      user-select: none;
+    }
+    .nav-user i {
+      font-size: 22px;
+      color: var(--blue-primary);
+    }
+    #logoutBtn {
+      background-color: var(--blue-primary);
+      color: var(--white);
+      border: none;
+      border-radius: 28px;
+      padding: 6px 16px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    #logoutBtn:hover {
+      background-color: var(--blue-dark);
+    }
+    .confirm-container {
+      padding: 60px 7vw;
+      max-width: 700px;
+      margin: 40px auto;
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px var(--shadow-light);
+      color: var(--text-dark);
+      text-align: center;
+      user-select: none;
+    }
+    .booking-title {
+      font-size: 3rem;
+      font-weight: 900;
+      margin-bottom: 20px;
+      color: var(--blue-primary);
+      letter-spacing: 3px;
+    }
+    .booking-success {
+      font-size: 1.25rem;
+      margin-bottom: 40px;
+      font-weight: 600;
+    }
+    .booking-detail-box {
+      background: #aee7ba;
+      border-radius: 24px;
+      padding: 30px 40px;
+      color: #253250;
+      font-family: 'Georgia', serif;
+      font-size: 1.15rem;
+      text-align: left;
+      margin: 0 auto 40px auto;
+      box-shadow: 0 10px 20px var(--shadow-light);
+    }
+    .booking-detail-box ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    .booking-detail-box li {
+      margin-bottom: 14px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+    }
+    .info-text {
+      font-size: 1rem;
+      margin-bottom: 32px;
+      color: var(--text-dark);
+    }
+    button:not(#logoutBtn) {
+      background-color: var(--accent);
+      border: none;
+      padding: 16px 48px;
+      border-radius: 28px;
+      font-weight: 700;
+      font-size: 1.15rem;
+      cursor: pointer;
+      color: var(--blue-dark);
+      box-shadow: 0 8px 20px #fcc640aa;
+      transition: all 0.3s ease;
+      margin: 0 12px;
+      min-width: 160px;
+      user-select: none;
+    }
+    button:not(#logoutBtn):hover {
+      background-color: #d4a021;
+      box-shadow: 0 10px 28px #d4a021cc;
+      color: var(--white);
+    }
+    .button-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="images/tripcore.jpg" alt="TripCore" />
+      <b>TripCore</b>
+    </div>
+    <div class="nav-links">
+      <a href="user_dashboard.html" class="nav-link">HOME</a>
+      <a href="browsepackage.html" class="nav-link">BROWSE PACKAGES</a>
+      <a href="user_mybookings.html" class="nav-link">MY BOOKINGS</a>
+      <a href="user_support.html" class="nav-link">SUPPORT</a>
+    </div>
+    <div class="nav-user">
+      <i class="fas fa-user"></i>
+      <span id="nav-username">User</span>
+    </div>
+    <button id="logoutBtn">
+      <i class="fas fa-sign-out-alt"></i> Log Out
+    </button>
+  </nav>
+
+  <main class="confirm-container">
+    <h1 class="booking-title">BOOKING CONFIRMED</h1>
+    <p class="booking-success">Your trip is successfully booked. We're excited to have you onboard!</p>
+    <div id="booking-detail" class="booking-detail-box">Loading booking details...</div>
+    <p class="info-text">Please keep this for your records. You can also download your e-ticket below.</p>
+    <div class="button-row">
+      <button id="download-eticket">Download E-Ticket</button>
+      <button onclick="window.location.href='user_dashboard.html'">Back to Home</button>
+    </div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    function loadCurrentUserNavbar() {
+      const usernameElem = document.getElementById("nav-username");
+      const currentUser = localStorage.getItem("currentUser");
+      if (currentUser) {
+        try {
+          const userObj = JSON.parse(currentUser);
+          usernameElem.textContent = userObj.fullname || userObj.username || "User";
+        } catch {
+          usernameElem.textContent = "User";
+        }
+      } else {
+        usernameElem.textContent = "User";
+      }
+    }
+    loadCurrentUserNavbar();
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('currentUser');
+      window.location.href = 'login.html';
+    });
+
+    const { jsPDF } = window.jspdf;
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    let bookingData = null;
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function loadBookingDetails(id) {
+      const stored = sessionStorage.getItem(id);
+      const detailDiv = document.getElementById('booking-detail');
+      if (!stored) {
+        detailDiv.textContent = 'Booking details not found.';
+        return;
+      }
+      try {
+        bookingData = JSON.parse(stored);
+      } catch {
+        detailDiv.textContent = 'Corrupted booking data.';
+        return;
+      }
+      detailDiv.innerHTML = `
+        <ul>
+          <li><strong>Package Booked:</strong> <span>${escapeHTML(bookingData.package)}</span></li>
+          <li><strong>Start Date:</strong> <span>${escapeHTML(bookingData.startDate)}</span></li>
+          <li><strong>Traveler Name:</strong> <span>${escapeHTML(bookingData.travelerName)}</span></li>
+          <li><strong>Contact:</strong> <span>${escapeHTML(bookingData.contact)}</span></li>
+          <li><strong>Number of Travelers:</strong> <span>${escapeHTML(bookingData.travelerCount)}</span></li>
+          <li><strong>Total Amount To Be Paid:</strong> <span>${escapeHTML(bookingData.totalAmount)}</span></li>
+        </ul>
+      `;
+    }
+
+    function downloadETicket() {
+      if (!bookingData) {
+        alert('No booking details to download.');
+        return;
+      }
+      const doc = new jsPDF();
+      doc.setFontSize(22);
+      doc.text('TripCore - E-Ticket', 20, 20);
+
+      doc.setFontSize(16);
+      doc.text('Booking Confirmation', 20, 40);
+      doc.setFontSize(14);
+      doc.text(`Package: ${bookingData.package}`, 20, 55);
+      doc.text(`Traveler: ${bookingData.travelerName}`, 20, 65);
+      doc.text(`Start Date: ${bookingData.startDate}`, 20, 75);
+      doc.text(`Number of Travelers: ${bookingData.travelerCount}`, 20, 85);
+      doc.text(`Total Paid: ${bookingData.totalAmount}`, 20, 95);
+      doc.text(`Contact Info: ${bookingData.contact}`, 20, 105);
+
+      doc.setFontSize(10);
+      doc.text('Thank you for booking with TripCore!', 20, 125);
+
+      doc.save(`TripCore_ETicket_${bookingData.id || 'Booking'}.pdf`);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const id = getQueryParam('id');
+      if (id) {
+        loadBookingDetails(id);
+      } else {
+        document.getElementById('booking-detail').textContent = 'No booking id provided.';
+      }
+      document.getElementById('download-eticket').addEventListener('click', downloadETicket);
+    });
+  </script>
+</body>
+</html>

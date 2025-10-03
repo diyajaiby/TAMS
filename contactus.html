@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Support & Help - User Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --blue-primary: #265aaa;
+      --blue-dark: #22466b;
+      --accent: #fcbc31;
+      --white: #fff;
+      --bg-dark: #22466b;
+      --text-light: #d5e7ff;
+      --shadow: rgba(0, 0, 0, 0.15);
+      --input-bg: #e6ecf7;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Navbar consistent style */
+    .navbar {
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      height: 60px;
+      box-shadow: 0 4px 14px rgba(34, 70, 107, 0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100vw;
+      left: 0;
+      justify-content: space-between;
+    }
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--blue-primary);
+    }
+    .navbar .logo img {
+      height: 40px;
+      border-radius: 8px;
+      box-shadow: 0 0 6px var(--accent);
+      background: var(--white);
+    }
+    .navbar nav {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+    .navbar nav a {
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.125rem;
+      color: var(--blue-dark);
+      padding: 8px 12px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .navbar nav a:hover,
+    .navbar nav a:focus {
+      background-color: var(--blue-primary);
+      color: var(--white);
+      outline: none;
+    }
+    .navbar nav a.active {
+      background-color: var(--blue-primary);
+      color: var(--white);
+      pointer-events: none;
+      cursor: default;
+    }
+    .navbar .user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--blue-primary);
+      cursor: default;
+      user-select: none;
+    }
+    .navbar .user i {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--blue-dark);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 0 8px var(--accent);
+    }
+    main {
+      flex-grow: 1;
+      max-width: 640px;
+      width: 100%;
+      background: var(--blue-dark);
+      border-radius: 24px;
+      padding: 32px 36px;
+      margin: 48px auto 60px auto;
+      box-shadow: 0 8px 28px rgba(26, 37, 64, 0.8);
+      color: var(--text-light);
+      box-sizing: border-box;
+    }
+    main .headline {
+      font-size: 2.6rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 32px;
+      user-select: none;
+      color: var(--white);
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    label {
+      font-weight: 600;
+      color: #e0e8ff;
+      user-select: none;
+    }
+    input.form-input, textarea.form-textarea {
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      background-color: var(--input-bg);
+      color: var(--blue-dark);
+      font-family: 'Montserrat', Arial, sans-serif;
+      transition: box-shadow 0.3s ease;
+      outline: none;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+    input.form-input:focus, textarea.form-textarea:focus {
+      box-shadow: 0 0 12px var(--blue-primary);
+    }
+    textarea.form-textarea {
+      min-height: 120px;
+    }
+    button.action-btn {
+      background-color: var(--accent);
+      border: none;
+      border-radius: 28px;
+      padding: 14px 42px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color: var(--blue-dark);
+      box-shadow: 0 6px 15px #fcc640aa;
+      user-select: none;
+      transition: all 0.3s ease;
+      align-self: center;
+      margin-top: 12px;
+    }
+    button.action-btn:hover {
+      background-color: #d4a021;
+      box-shadow: 0 8px 18px #d4a021cc;
+      color: #fff;
+    }
+    .contact-info {
+      margin-top: 30px;
+      text-align: center;
+      color: #a7bfdd;
+      font-size: 1.05rem;
+      user-select: none;
+    }
+    .contact-info p {
+      margin: 8px 0;
+    }
+    @media (max-width: 720px) {
+      main {
+        max-width: 90vw;
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">
+      <img src="images/tripcore.jpg" alt="TripCore Logo" />
+      TripCore
+    </div>
+    <nav>
+      <a href="index.html">HOME</a>
+      <a href="browsepackage.html">BROWSE PACKAGES</a>
+      <a href="contactus.html" class="active">CONTACT US</a>
+      <a href="about.html">ABOUT US</a>
+      <a href="login.html">LOGIN</a>
+    </nav>
+    <div class="user">
+      <i class="fas fa-user"></i>
+      <span id="usernameDisplay">Guest</span>
+    </div>
+  </header>
+
+  <main>
+    <div class="headline">Contact Us</div>
+    <section>
+      <p>Feel free to reach out to the TripCore team with your questions, feedback, or support requests!</p>
+      <form id="contactForm">
+        <label for="name">Your Name*</label>
+        <input type="text" id="name" class="form-input" placeholder="Enter your name" required />
+
+        <label for="email">Your Email*</label>
+        <input type="email" id="email" class="form-input" placeholder="Enter your email" required />
+
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" class="form-input" placeholder="Subject" />
+
+        <label for="message">Message*</label>
+        <textarea id="message" class="form-textarea" placeholder="Your message..." required></textarea>
+
+        <button type="submit" class="action-btn">Send Message</button>
+      </form>
+      <div class="contact-info" aria-live="polite" id="formMessage" role="alert"></div>
+    </section>
+  </main>
+
+  <script>
+    const usernameDisplay = document.getElementById('usernameDisplay');
+    let currentUser = null;
+    try {
+      currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    } catch {}
+    usernameDisplay.textContent = currentUser?.fullname || currentUser?.name || currentUser?.username || 'Guest';
+
+    const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
+
+    contactForm.addEventListener('submit', e => {
+      e.preventDefault();
+
+      if (!contactForm.checkValidity()) {
+        formMessage.textContent = 'Please fill all required fields correctly.';
+        formMessage.style.color = 'red';
+        return;
+      }
+
+      const messageData = {
+        id: 'msg_' + Date.now(),
+        name: contactForm.name.value.trim(),
+        email: contactForm.email.value.trim(),
+        subject: contactForm.subject.value.trim(),
+        message: contactForm.message.value.trim(),
+        timestamp: new Date().toISOString()
+      };
+
+      let messages = [];
+      try {
+        messages = JSON.parse(localStorage.getItem('supportMessages')) || [];
+      } catch {
+        messages = [];
+      }
+      messages.push(messageData);
+      localStorage.setItem('supportMessages', JSON.stringify(messages));
+
+      formMessage.style.color = 'lightgreen';
+      formMessage.textContent = 'Thank you! Your message has been saved. We will get back to you shortly.';
+      contactForm.reset();
+    });
+  </script>
+</body>
+</html>

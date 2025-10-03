@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>User Dashboard - TripCore</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --blue-primary: #265aaa;
+      --blue-dark: #22466b;
+      --accent: #fcbc31;
+      --white: #fff;
+      --shadow-light: rgba(34, 70, 107, 0.12);
+      --text-dark: #21314f;
+      --bg-light: #f0f4f8;
+      --card-shadow: rgba(0, 0, 0, 0.15);
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    body {
+      background-color: var(--blue-dark);
+      color: var(--blue-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 40px;
+    }
+    .navbar {
+      background: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 60px;
+      width: 100vw;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0 30px;
+      box-shadow: 0 4px 14px var(--shadow-light);
+      box-sizing: border-box;
+    }
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--blue-primary);
+    }
+    .navbar .logo img {
+      height: 40px;
+      border-radius: 8px;
+      box-shadow: 0 0 6px var(--accent);
+      background: var(--white);
+    }
+    .navbar .nav-links {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      gap: 36px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .navbar .nav-links a {
+      text-decoration: none;
+      color: var(--blue-dark);
+      font-size: 1.05rem;
+      padding: 10px 14px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      text-transform: uppercase;
+      user-select: none;
+      cursor: pointer;
+    }
+    .navbar .nav-links a:hover,
+    .navbar .nav-links a:focus,
+    .navbar .nav-links a.active {
+      background-color: var(--blue-primary);
+      color: var(--white);
+      outline: none;
+    }
+    .navbar .nav-links a.active {
+      pointer-events: none;
+      cursor: default;
+    }
+    .nav-user {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--blue-dark);
+      user-select: none;
+    }
+    .nav-user i {
+      font-size: 22px;
+      color: var(--blue-primary);
+    }
+    #logoutBtn {
+      background-color: var(--blue-primary);
+      color: var(--white);
+      border: none;
+      border-radius: 28px;
+      padding: 8px 22px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      font-size: 1rem;
+    }
+    #logoutBtn:hover {
+      background-color: var(--blue-dark);
+    }
+
+    .dashboard-shell {
+      max-width: 900px;
+      margin: 60px auto 40px auto;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+    .dashboard-shell h1 {
+      color: var(--white);
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      user-select: none;
+    }
+
+    /* Welcome Card */
+    .welcome-card {
+      background:#fff;
+      color:#22466b;
+      border-radius:20px;
+      padding:30px;
+      max-width:700px;
+      box-shadow: 0 6px 28px rgba(0,0,0,0.18);
+      text-align:center;
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+    .welcome-card h2 {
+      font-size: 2rem;
+      font-weight: 900;
+      margin-bottom: 0.5em;
+    }
+    .welcome-card p {
+      font-style: italic;
+      font-size: 1.1rem;
+      margin-top: 0;
+    }
+
+    /* Popular Destinations Carousel */
+    .featured-destinations {
+      max-width: 900px;
+      margin: 0 auto 40px auto;
+      color: var(--white);
+      user-select: none;
+    }
+    .featured-destinations h2 {
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .carousel-container {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+    .carousel-container img {
+      border-radius: 16px;
+      flex: 0 0 auto;
+      width: 260px;
+      height: 160px;
+      object-fit: cover;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .carousel-container img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.5);
+    }
+
+    /* Booking Summary 
+    #booking-summary-card {
+      background: var(--white);
+      border-radius: 24px;
+      box-shadow: 0 12px 26px var(--card-shadow);
+      width: 100%;
+      max-width: 700px;
+      padding: 30px 40px;
+      user-select: none;
+      color: var(--blue-dark);
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    #booking-summary-card h2 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--blue-primary);
+      margin-bottom: 24px;
+    }
+    #booking-summary-card p {
+      font-style: italic;
+      color: #657a9c;
+      margin-top: 16px;
+    }*/
+
+    /* Profile Section styling */
+    .main-section {
+      background: var(--white);
+      padding: 34px 40px;
+      border-radius: 24px;
+      box-shadow: 0 8px 28px var(--card-shadow);
+      max-width: 700px;
+      width: 100%;
+      margin: 0 auto;
+      user-select: none;
+    }
+    .profile-box {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      color: var(--blue-dark);
+    }
+    .profile-pic {
+      height: 90px;
+      width: 90px;
+      border-radius: 50%;
+      background: #d5ecf6;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.11);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2.8rem;
+      color: var(--blue-primary);
+    }
+    .profile-info {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      font-size: 1.12rem;
+      font-weight: 600;
+    }
+    .profile-info .pf-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .edit-btn {
+      background-color: var(--blue-primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 6px 14px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #1a57bfcc;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    .edit-btn:hover {
+      background-color: #1a53b6;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo">
+      <img src="images/tripcore.jpg" alt="TripCore" />
+      <b>TripCore</b>
+    </div>
+    <div class="nav-links">
+      <a href="user_dashboard.html" class="nav-link active">HOME</a>
+      <a href="browsepackage.html" class="nav-link">BROWSE PACKAGES</a>
+      <a href="user_mybookings.html" class="nav-link">MY BOOKINGS</a>
+      <a href="user_support.html" class="nav-link">SUPPORT</a>
+    </div>
+    <button class="nav-link" id="logoutBtn">
+      <i class="fas fa-sign-out-alt"></i> Log Out
+    </button>
+    <div class="nav-user">
+      <i class="fas fa-user"></i><span id="usernameDisplay">User</span>
+    </div>
+  </div>
+
+  <div class="dashboard-shell">
+    <h1>User Dashboard</h1>
+
+    <section class="welcome-card" aria-label="Welcome message and motivational quote">
+      <h2>Welcome back, <span id="welcomeUser">Traveler</span>!</h2>
+      <p>"Traveling – it leaves you speechless, then turns you into a storyteller." – Ibn Battuta</p>
+    </section>
+
+    <section class="featured-destinations" aria-label="Popular vacation destinations">
+      <h2>Popular Destinations</h2>
+      <div class="carousel-container" role="list">
+        <img src="images/destination1.jpeg" alt="Tropical Beach" role="listitem" />
+        <img src="images/destination2.jpeg" alt="Mountain Retreat" role="listitem" />
+        <img src="images/destination3.webp" alt="Historic Cityscape" role="listitem" />
+      </div>
+    </section>
+
+    <!--section id="booking-summary-card" aria-label="Booking summary">
+      <h2>Booking Summary</h2>
+      <p>No bookings yet.</p>
+    </section-->
+
+    <section class="main-section" aria-label="Profile information">
+      <div class="profile-box">
+        <div class="profile-pic" id="profile-pic" aria-label="User profile picture with icon">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="profile-info">
+          <div class="pf-row" id="name-row">
+            <label>Name:</label>
+            <span id="profile-name"></span>
+            <button class="edit-btn" onclick="startEdit('name')">Edit</button>
+          </div>
+          <div class="pf-row" id="email-row">
+            <label>Email:</label>
+            <span id="profile-email"></span>
+            <button class="edit-btn" onclick="startEdit('email')">Edit</button>
+          </div>
+          <div class="pf-row" id="phone-row">
+            <label>Phone:</label>
+            <span id="profile-phone"></span>
+            <button class="edit-btn" onclick="startEdit('phone')">Edit</button>
+          </div>
+          <div class="pf-row" id="address-row">
+            <label>Address:</label>
+            <span id="profile-address"></span>
+            <button class="edit-btn" onclick="startEdit('address')">Edit</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Show user name in welcome and nav areas
+    function showUsername() {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+      const name = currentUser.fullname || currentUser.username || 'Traveler';
+      document.getElementById('usernameDisplay').textContent = name;
+      document.getElementById('welcomeUser').textContent = name;
+    }
+
+    // Static profile data for demo (no live fetching)
+    const profileData = {
+      name: 'deepak',
+      email: 'deepak@gmail.com',
+      phone: '8542367891',
+      address: 'Kerala'
+    };
+
+    function showProfile() {
+      document.getElementById('profile-name').textContent = profileData.name;
+      document.getElementById('profile-email').textContent = profileData.email;
+      document.getElementById('profile-phone').textContent = profileData.phone;
+      document.getElementById('profile-address').textContent = profileData.address;
+    }
+
+    function startEdit(field) {
+      alert('Profile editing is currently disabled for demo.');
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('currentUser');
+      window.location.href = 'login.html';
+    });
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', () => {
+      showUsername();
+      showProfile();
+    });
+  </script>
+</body>
+</html>

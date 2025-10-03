@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Profile - TripCore</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: #42618a;
+      color: #fff;
+    }
+    .navbar {
+      background: #fff;
+      display: flex;
+      align-items: center;
+      height: 54px;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 500;
+      font-size: 21px;
+      box-sizing: border-box;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      margin-left: 10px;
+      margin-right: 25px;
+      font-size: 18px;
+      color: #0d355f;
+    }
+    .logo img {
+      height: 32px;
+      margin-right: 8px;
+    }
+    .nav-link {
+      color: #222;
+      text-decoration: none;
+      margin: 0 40px 0 0;
+      font-size: 20px;
+      font-weight: 500;
+      cursor: pointer;
+      background: none;
+      border: none;
+      text-transform: none;
+      letter-spacing: 0;
+      transition: color 0.2s;
+      padding: 0;
+    }
+    .nav-link:last-child {
+      margin-right: 0;
+    }
+    .nav-link:hover {
+      color: #248aed;
+    }
+    .user {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 18px;
+      color: #558cd9;
+      margin-right: 22px;
+    }
+    .user i {
+      font-size: 29px;
+    }
+    .main-content {
+      margin: 32px auto 0 auto;
+      padding: 0 0 40px 0;
+      max-width: 860px;
+    }
+    .panel {
+      background: #6e8db1;
+      border-radius: 36px;
+      box-sizing: border-box;
+      padding: 28px 32px 40px 32px;
+      box-shadow: 0px 8px 28px #27334a40;
+      min-height: 400px;
+    }
+    .panel-header {
+      text-align: center;
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+    .profile-pic-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .profile-pic {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 2px 4px 0 #b0b8c4;
+      font-size: 3.5rem;
+      color: #42618a;
+      position: relative;
+      margin-bottom: 2px;
+      overflow: hidden;
+    }
+    .profile-pic img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+      background: #fff;
+    }
+    .profile-change-label {
+      font-size: 1.05rem;
+      color: #222;
+      margin-top: 11px;
+      margin-bottom: 0;
+      cursor: pointer;
+      text-align: center;
+      font-weight: 500;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .profile-change-label input[type="file"] {
+      display: none;
+    }
+    .edit-form {
+      margin: 0 auto;
+      max-width: 670px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px 50px;
+      margin-bottom: 18px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-label {
+      color: #222;
+      font-weight: 600;
+      font-size: 1.08rem;
+    }
+    .form-input, .form-textarea {
+      font-family: inherit;
+      border: none;
+      border-radius: 7px;
+      padding: 10px 12px;
+      font-size: 1.09rem;
+      background: #ddd;
+      color: #333;
+      margin-top: 1px;
+    }
+    .form-input:focus, .form-textarea:focus {
+      outline: 2px solid #248aed;
+    }
+    .form-textarea {
+      resize: vertical;
+      min-height: 38px;
+      max-height: 140px;
+    }
+    .button-row {
+      grid-column: span 2;
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 26px;
+    }
+    .btn-save {
+      background: #248aed;
+      color: #fff;
+      border: none;
+      font-size: 1.18rem;
+      padding: 11px 54px;
+      border-radius: 9px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .14s;
+      box-shadow: 0 2px 10px #184d3e33;
+    }
+    .btn-save:hover {
+      background: #176dc1;
+    }
+    @media (max-width: 780px) {
+      .main-content {
+        max-width: 99vw;
+      }
+      .panel {
+        padding: 12px 2vw 10vw 2vw;
+      }
+      .edit-form {
+        grid-template-columns: 1fr;
+        gap: 20px 0;
+        max-width: 100%;
+      }
+      .button-row {
+        grid-column: span 1;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo">
+      <img src="C:\Users\jaiby\Downloads\Pictures\tripcore.jpg" alt="TripCore" />
+      <strong>TripCore</strong>
+    </div>
+    <a href="homepage.html" class="nav-link">HOME</a>
+    <a href="browsepackage.html" class="nav-link">BROWSE PACKAGES</a>
+    <a href="about.html" class="nav-link">ABOUT US</a>
+    <a href="login.html" class="nav-link">LOGIN</a>
+    <div class="user">
+      <i class="fas fa-user-circle"></i>
+      User
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="panel">
+      <div class="panel-header">EDIT PROFILE</div>
+      <div class="profile-pic-section">
+        <div class="profile-pic" id="profilePicDisplay">
+          <i class="fas fa-user" id="profilePicDefault"></i>
+        </div>
+        <label class="profile-change-label">
+          Change
+          <input type="file" accept="image/*" id="profilePicInput" onchange="changeProfileImage(event)" />
+        </label>
+      </div>
+      <form class="edit-form" autocomplete="off">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-input" placeholder="Enter your name" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input type="text" class="form-input" placeholder="Enter your phone" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email ID</label>
+          <input type="email" class="form-input" placeholder="Enter your email" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Address</label>
+          <input type="text" class="form-input" placeholder="Enter your address"/>
+        </div>
+        <div class="button-row">
+          <button type="submit" class="btn-save">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+    function changeProfileImage(event) {
+      const file = event.target.files[0];
+      const displayDiv = document.getElementById('profilePicDisplay');
+      const defaultIcon = document.getElementById('profilePicDefault');
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          defaultIcon.style.display = 'none';
+          let img = displayDiv.querySelector("img");
+          if (!img) {
+            img = document.createElement("img");
+            displayDiv.appendChild(img);
+          }
+          img.src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+      }
+    }
+  </script>
+</body>
+</html>

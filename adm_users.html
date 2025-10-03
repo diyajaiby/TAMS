@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TripCore - View Customer Profiles</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --blue-primary: #265aaa;
+      --blue-dark: #22466b;
+      --accent: #fcbc31;
+      --white: #fff;
+      --bg-light: #f8f9fa;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--blue-primary);
+      color: var(--blue-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+    }
+
+    /* Navbar */
+
+    .navbar {
+      background: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 60px;
+      width: 100vw;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0 20px;
+      box-shadow: 0 4px 14px rgba(34, 70, 107, 0.15);
+      box-sizing: border-box;
+    }
+
+    .navbar .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--blue-primary);
+    }
+
+    .navbar .logo img {
+      height: 40px;
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: 0 0 6px var(--accent);
+    }
+
+    .navbar nav {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .navbar nav a {
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.125rem;
+      color: var(--blue-dark);
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      transition: background-color 0.3s, color 0.3s ease;
+    }
+
+    .navbar nav a:hover,
+    .navbar nav a:focus {
+      background-color: var(--blue-primary);
+      color: var(--white);
+      outline: none;
+    }
+
+    .navbar nav a.active {
+      background-color: var(--blue-primary);
+      color: var(--white);
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .nav-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      color: var(--blue-dark);
+      font-size: 1rem;
+      user-select: none;
+    }
+
+    #logoutBtn {
+      background-color: var(--blue-primary);
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 6px 16px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    #logoutBtn:hover {
+      background-color: var(--blue-dark);
+    }
+
+    /* Main content */
+
+    .main-content {
+      max-width: 1100px;
+      width: 100%;
+      padding: 24px 20px 40px 20px;
+      margin-top: 34px;
+      background: var(--bg-light);
+      border-radius: 12px;
+      box-shadow: 0 4px 18px #1d26362e;
+      color: var(--blue-dark);
+      min-height: 520px;
+      box-sizing: border-box;
+    }
+
+    .panel {
+      border-radius: 12px;
+    }
+
+    .panel-header {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 25px;
+      margin-top: 8px;
+    }
+
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      background: #dedede;
+      border-radius: 16px 16px 0 0;
+      padding: 18px 22px 15px 22px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .search-group {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 8px;
+      padding: 0 12px;
+      font-size: 1.1rem;
+      min-width: 170px;
+    }
+
+    .search-group i {
+      color: #587faa;
+      margin-right: 7px;
+    }
+
+    .search-group input {
+      border: none;
+      outline: none;
+      font-size: 1.06rem;
+      padding: 8px 0;
+      background: transparent;
+      width: 110px;
+      font-family: 'Montserrat', Arial, sans-serif;
+      color: #222;
+    }
+
+    .date-group {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 8px;
+      padding: 0 10px;
+      font-size: 1.1rem;
+      min-width: 120px;
+      gap: 6px;
+      color: #223e60;
+    }
+
+    .date-group i {
+      color: #5781bb;
+    }
+
+    .date-group input[type="date"] {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 1.06rem;
+      padding: 8px 0;
+      width: 110px;
+      font-family: 'Montserrat', Arial, sans-serif;
+      color: #222;
+      cursor: pointer;
+      user-select: text;
+    }
+
+    .status-group {
+      min-width: 130px;
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 8px;
+      padding: 0 10px;
+      font-size: 1.1rem;
+    }
+
+    .status-group select {
+      border: none;
+      background: transparent;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.1rem;
+      padding: 8px 0;
+      font-weight: 600;
+      color: #223e60;
+      outline: none;
+      cursor: pointer;
+      width: 95px;
+    }
+
+    .table-container {
+      background: var(--white);
+      border-radius: 12px 12px 8px 8px;
+      padding: 16px;
+      overflow-x: auto;
+      box-sizing: border-box;
+      max-height: 480px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 1.13rem;
+      color: var(--blue-dark);
+      background: none;
+    }
+
+    thead tr {
+      background: var(--blue-primary);
+      color: var(--white);
+    }
+
+    thead th {
+      font-weight: 600;
+      padding: 12px 16px;
+      text-align: left;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      user-select: none;
+    }
+
+    thead th:not(:last-child) {
+      border-right: 2px solid #3e5c7c;
+    }
+
+    tbody tr {
+      background: var(--white);
+      font-weight: 500;
+      border-bottom: 2px solid #cbcbcb;
+    }
+
+    tbody td {
+      padding: 12px 16px;
+      vertical-align: middle;
+      user-select: text;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .status-active {
+      background: #39b45a;
+      color: #fff;
+      padding: 3px 18px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 1rem;
+      display: inline-block;
+      user-select: none;
+    }
+
+    .status-inactive {
+      background: #e74c3c;
+      color: #fff;
+      padding: 3px 18px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 1rem;
+      display: inline-block;
+      user-select: none;
+    }
+
+    .btn-action {
+      border: none;
+      outline: none;
+      padding: 6px 17px;
+      font-size: 1rem;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-left: 6px;
+      user-select: none;
+    }
+
+    .btn-view {
+      background: #bbb;
+      color: var(--blue-dark);
+      border: 1px solid #8e8e8e;
+    }
+
+    .btn-delete {
+      background: #e74c3c;
+      color: var(--white);
+      border: 1px solid #c0392b;
+    }
+
+    @media (max-width: 700px) {
+      .main-content {
+        padding: 0 4px;
+        max-width: 100%;
+      }
+
+      .panel {
+        padding: 8px 4px 24px 4px;
+      }
+
+      .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 12px 6px 8px 6px;
+      }
+
+      .table-container {
+        padding: 6px;
+      }
+
+      .date-group input[type="date"] {
+        width: 100%;
+      }
+
+      .search-group input {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <img src="images/tripcore.jpg" alt="TripCore" />
+      TripCore
+    </div>
+    <nav>
+      <a href="admin.html" class="nav-link">Home</a>
+      <a href="adpackages.html" class="nav-link">Packages</a>
+      <a href="adbooking.html" class="nav-link">Bookings</a>
+      <a href="adm_users.html" class="nav-link active">Users</a>
+      <a href="adm_gen_invoice.html" class="nav-link">Generate Invoices</a>
+      <a href="adm_feedback.html" class="nav-link">View Messages</a>
+      <a href="adm_report.html" class="nav-link">Reports</a>
+    </nav>
+    <div class="nav-user">
+      <i class="fas fa-user-circle"></i>
+      <span id="usernameDisplay">Admin</span>
+      <button id="logoutBtn" title="Logout">LOGOUT</button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="panel">
+      <div class="panel-header">VIEW CUSTOMER PROFILES</div>
+
+      <div class="filter-bar">
+        <div class="search-group">
+          <i class="fa fa-search"></i>
+          <input type="text" id="searchInput" placeholder="Search by Name or Email" />
+        </div>
+        <div class="date-group">
+          From
+          <i class="fa-regular fa-calendar"></i>
+          <input type="date" id="filterFrom" />
+        </div>
+        <div class="date-group">
+          To
+          <i class="fa-regular fa-calendar"></i>
+          <input type="date" id="filterTo" />
+        </div>
+        <div class="status-group">
+          <select id="statusFilter">
+            <option value="">All Status</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email ID</th>
+              <th>Phone</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody"></tbody>
+        </table>
+        <div id="empty-msg" style="text-align:center; margin-top: 12px; font-size: 1.1rem; color: var(--blue-dark);"></div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Admin user display and logout
+    const usernameDisplay = document.getElementById('usernameDisplay');
+    let adminUser = null;
+    try {
+      adminUser = JSON.parse(localStorage.getItem('adminUser'));
+    } catch { }
+    usernameDisplay.textContent = adminUser?.fullname || adminUser?.username || 'Admin';
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('adminUser');
+      window.location.href = 'login.html';
+    });
+
+    // Get all users from localStorage (assuming key 'users')
+    function getAllUsers() {
+      let users = [];
+      try {
+        users = JSON.parse(localStorage.getItem('users')) || [];
+      } catch { }
+      return users;
+    }
+
+    // Format date for comparisons
+    function parseDateForFilter(dateStr) {
+      if (!dateStr) return null;
+      const d = new Date(dateStr);
+      return isNaN(d) ? null : d;
+    }
+
+    // Filter and render users table
+    function renderUsersTable() {
+      const users = getAllUsers();
+      const tbody = document.getElementById('usersTableBody');
+      const emptyMsg = document.getElementById('empty-msg');
+      const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+      const fromDate = parseDateForFilter(document.getElementById('filterFrom').value);
+      const toDate = parseDateForFilter(document.getElementById('filterTo').value);
+      const statusFilter = document.getElementById('statusFilter').value.trim();
+
+      let filteredUsers = users;
+
+      // Filter by search term (name or email)
+      if (searchTerm) {
+        filteredUsers = filteredUsers.filter(u =>
+          (u.fullname || u.name || '').toLowerCase().includes(searchTerm) ||
+          (u.email || '').toLowerCase().includes(searchTerm)
+        );
+      }
+
+      // Filter by signup or creation date (assuming stored as 'createdDate' or ignore if not present)
+      if (fromDate) {
+        filteredUsers = filteredUsers.filter(u => {
+          const uDate = parseDateForFilter(u.createdDate);
+          return uDate && uDate >= fromDate;
+        });
+      }
+      if (toDate) {
+        filteredUsers = filteredUsers.filter(u => {
+          const uDate = parseDateForFilter(u.createdDate);
+          return uDate && uDate <= toDate;
+        });
+      }
+
+      // Filter by status
+      if (statusFilter) {
+        filteredUsers = filteredUsers.filter(u => (u.status || 'Active') === statusFilter);
+      }
+
+      tbody.innerHTML = '';
+      if (filteredUsers.length === 0) {
+        emptyMsg.textContent = 'No users found.';
+        return;
+      } else {
+        emptyMsg.textContent = '';
+      }
+
+      filteredUsers.forEach((u, index) => {
+        const name = u.fullname || u.name || 'Unnamed';
+        const email = u.email || 'N/A';
+        const phone = u.phone || u.contact || 'N/A';
+        const status = (u.status || 'Active').toLowerCase();
+        const statusClass = status === 'active' ? 'status-active' : 'status-inactive';
+
+        tbody.innerHTML += `
+          <tr>
+            <td>${name}</td>
+            <td>${email}</td>
+            <td>${phone}</td>
+            <td><span class="${statusClass}">${u.status || 'Active'}</span></td>
+            <td>
+              <button class="btn-action btn-view" onclick="viewUser(${index})">View</button>
+              <button class="btn-action btn-delete" onclick="deleteUser(${index})">Delete</button>
+            </td>
+          </tr>`;
+      });
+    }
+
+    // View user details alert (can be improved later)
+    function viewUser(index) {
+      const users = getAllUsers();
+      if (index < 0 || index >= users.length) {
+        alert('User not found!');
+        return;
+      }
+      const user = users[index];
+      alert(
+        `User Details:\n\nName: ${user.fullname || user.name || 'Unnamed'}\nEmail: ${user.email || 'N/A'}\nPhone: ${user.phone || user.contact || 'N/A'}\nStatus: ${user.status || 'Active'}`
+      );
+    }
+
+    // Delete user with confirmation
+    function deleteUser(index) {
+      let users = getAllUsers();
+      if (index < 0 || index >= users.length) {
+        alert('User not found!');
+        return;
+      }
+
+      if (confirm('Are you sure you want to delete this user?')) {
+        users.splice(index, 1);
+        localStorage.setItem('users', JSON.stringify(users));
+        renderUsersTable();
+      }
+    }
+
+    // Event listeners for filters and search
+    document.getElementById('searchInput').addEventListener('input', renderUsersTable);
+    document.getElementById('filterFrom').addEventListener('change', renderUsersTable);
+    document.getElementById('filterTo').addEventListener('change', renderUsersTable);
+    document.getElementById('statusFilter').addEventListener('change', renderUsersTable);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderUsersTable();
+    });
+  </script>
+</body>
+
+</html>
