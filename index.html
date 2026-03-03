@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XG9RL72JTS"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-XG9RL72JTS');
-</script>
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-58DJG5TQ');
+  </script>
+  <!-- End Google Tag Manager -->
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TripCore - Homepage</title>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
   <style>
     :root {
       --blue-primary: #265aaa;
@@ -23,12 +28,11 @@
       --shadow: rgba(0, 0, 0, 0.1);
     }
     * {
-      margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', Arial, sans-serif;
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
-    body {
-      background: #f8f8f8;
-      color: #333;
-    }
+    body { background: #f8f8f8; color: #333; }
+
     header.navbar {
       background: var(--white);
       display: flex;
@@ -41,6 +45,7 @@
       top: 0;
       z-index: 1000;
     }
+
     .navbar .logo {
       display: flex;
       align-items: center;
@@ -49,12 +54,14 @@
       color: var(--blue-primary);
       font-size: 1.5rem;
     }
+
     .navbar .logo img {
       height: 36px;
       border-radius: 6px;
       box-shadow: 0 0 10px var(--accent);
       background: var(--white);
     }
+
     .navbar nav a {
       color: #222;
       text-decoration: none;
@@ -63,22 +70,24 @@
       padding: 8px 12px;
       border-radius: 6px;
       text-transform: uppercase;
-      transition: background-color 0.3s, color 0.3s;
+      transition: 0.3s;
       font-size: 1rem;
     }
-    .navbar nav a.active, .navbar nav a:hover {
+
+    .navbar nav a.active,
+    .navbar nav a:hover {
       background-color: var(--blue-primary);
       color: var(--white);
-      outline: none;
     }
+
     .navbar .user {
       display: flex;
       align-items: center;
       gap: 8px;
       font-weight: 600;
       color: var(--blue-primary);
-      user-select: none;
     }
+
     .navbar .user i {
       background: var(--blue-dark);
       color: white;
@@ -91,6 +100,7 @@
       box-shadow: 0 0 8px var(--accent);
       font-size: 18px;
     }
+
     .hero {
       background: url("images/bg.jpg") no-repeat center/cover;
       height: 500px;
@@ -102,18 +112,21 @@
       color: white;
       padding: 20px;
     }
+
     .hero h1 {
       font-size: 48px;
       font-weight: 900;
       margin-bottom: 10px;
       text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
     }
+
     .hero p {
       font-size: 18px;
       margin-bottom: 20px;
       text-shadow: 1px 1px 6px rgba(0,0,0,0.7);
     }
-    .hero .btn {
+
+    .btn {
       padding: 12px 28px;
       font-weight: 700;
       font-size: 1.1rem;
@@ -121,23 +134,24 @@
       border: none;
       cursor: pointer;
       margin-right: 16px;
-      transition: background-color 0.3s;
+      transition: 0.3s;
     }
+
     .btn-primary {
       background-color: var(--blue-primary);
       color: white;
     }
-    .btn-primary:hover {
-      background-color: var(--blue-dark);
-    }
+
+    .btn-primary:hover { background-color: var(--blue-dark); }
+
     .btn-secondary {
       background-color: white;
       color: black;
       border: 1px solid #ccc;
     }
-    .btn-secondary:hover {
-      background-color: #eee;
-    }
+
+    .btn-secondary:hover { background-color: #eee; }
+
     .features {
       display: flex;
       justify-content: space-around;
@@ -147,6 +161,7 @@
       flex-wrap: wrap;
       gap: 20px;
     }
+
     .feature-box {
       flex: 1 1 250px;
       background-color: rgba(255 255 255 / 0.15);
@@ -156,14 +171,7 @@
       font-size: 1.1rem;
       font-weight: 600;
     }
-    footer {
-      background-color: var(--blue-dark);
-      color: white;
-      text-align: center;
-      padding: 15px 3vw;
-      font-size: 0.9rem;
-      user-select: none;
-    }
+
     .footer-contact {
       background-color: #f5f5f5;
       color: black;
@@ -172,17 +180,34 @@
       justify-content: space-between;
       max-width: 1100px;
       margin: 0 auto;
-      user-select: none;
+    }
+
+    footer {
+      background-color: var(--blue-dark);
+      color: white;
+      text-align: center;
+      padding: 15px 3vw;
+      font-size: 0.9rem;
     }
   </style>
+
 </head>
+
 <body>
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-58DJG5TQ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
 <header class="navbar">
   <div class="logo">
     <img src="images/tripcore.jpg" alt="Logo">
     TripCore
   </div>
+
   <nav>
     <a href="index.html" class="active">Home</a>
     <a href="browsepackage.html">Browse Packages</a>
@@ -190,15 +215,26 @@
     <a href="about.html">About Us</a>
     <a href="login.html">Login</a>
   </nav>
-  <div class="user"><i class="fas fa-user"></i> <span id="username">Guest</span></div>
+
+  <div class="user">
+    <i class="fas fa-user"></i>
+    <span id="username">Guest</span>
+  </div>
 </header>
 
 <section class="hero">
   <h1>Discover your Next Adventure with us!!!</h1>
   <p>Handpicked packages, Seamless booking, unforgettable journeys...</p>
   <div>
-    <button class="btn btn-primary" onclick="window.location.href='browsepackage.html'">Browse Packages</button>
-    <button class="btn btn-secondary" onclick="window.location.href='contactus.html'">Contact Us</button>
+    <button class="btn btn-primary"
+      onclick="window.location.href='browsepackage.html'">
+      Browse Packages
+    </button>
+
+    <button class="btn btn-secondary"
+      onclick="window.location.href='contactus.html'">
+      Contact Us
+    </button>
   </div>
 </section>
 
@@ -207,10 +243,12 @@
     <h3>Curated Packages</h3>
     <p>Trusted by 10,000+ travelers</p>
   </div>
+
   <div class="feature-box">
     <h3>24/7 Support</h3>
     <p>Get assistance anytime</p>
   </div>
+
   <div class="feature-box">
     <h3>Easy Booking</h3>
     <p>Seamless, secure, and fast</p>
@@ -235,4 +273,3 @@
 
 </body>
 </html>
-
