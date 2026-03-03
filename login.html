@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XG9RL72JTS"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-XG9RL72JTS');
-</script>
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-58DJG5TQ');
+  </script>
+  <!-- End Google Tag Manager -->
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Login - TripCore</title>
+
   <style>
     body {
       font-family: 'Montserrat', Arial, sans-serif;
@@ -26,7 +30,6 @@
       padding: 0;
     }
     .container {
-      background: #1e3a7a;
       background: linear-gradient(145deg, #2a5298, #1a355f);
       padding: 40px 36px 44px 36px;
       border-radius: 16px;
@@ -44,7 +47,6 @@
       font-weight: 900;
       letter-spacing: 1.2px;
       text-shadow: 0 2px 6px rgb(45 77 136 / 0.75);
-      user-select: none;
     }
     input[type="text"],
     input[type="password"] {
@@ -57,22 +59,12 @@
       font-weight: 600;
       background-color: rgba(255,255,255,0.15);
       color: #fbfbfb;
-      box-shadow: inset 1px 1px 3px rgba(255,255,255,0.4),
-                  inset -1px -1px 4px rgba(0,0,0,0.2);
-      transition: background-color 0.3s, box-shadow 0.3s;
-      user-select: text;
+      transition: 0.3s;
     }
-    input[type="text"]::placeholder,
-    input[type="password"]::placeholder {
-      color: #d4d9e2;
-      opacity: 0.9;
-    }
-    input[type="text"]:focus,
-    input[type="password"]:focus {
+    input:focus {
       outline: none;
       background-color: rgba(255,255,255,0.3);
       box-shadow: 0 0 8px 1px #6a9cf7;
-      color: #fff;
     }
     button {
       width: 100%;
@@ -84,23 +76,17 @@
       color: #fff;
       font-size: 1.3rem;
       font-weight: 900;
-      letter-spacing: 0.07em;
       cursor: pointer;
-      box-shadow: 0 8px 22px rgba(33, 140, 57, 0.7);
-      transition: background 0.3s ease, box-shadow 0.3s ease;
-      user-select: none;
+      transition: 0.3s;
     }
     button:hover {
       background: linear-gradient(45deg, #40a036, #23b224);
-      box-shadow: 0 12px 28px rgba(13, 112, 48, 0.9);
     }
     .msg {
       margin-top: 20px;
       font-weight: 700;
       font-size: 1.05rem;
       height: 1.2em;
-      user-select: none;
-      text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
     }
     a {
       display: block;
@@ -108,44 +94,45 @@
       color: #a8d1aa;
       text-decoration: underline;
       font-weight: 600;
-      font-size: 1.05rem;
-      user-select: none;
-      transition: color 0.3s ease;
-    }
-    a:hover {
-      color: #d2f8b0;
     }
     #guest-btn {
       width: 100%;
       padding: 14px 0;
       margin-top: 18px;
-      border: none;
       border-radius: 28px;
       background: #ccd7e3;
       color: #1e3a7a;
       font-size: 1.13rem;
       font-weight: 900;
-      letter-spacing: 0.06em;
       cursor: pointer;
-      box-shadow: 0 5px 12px rgba(16, 40, 71, 0.15);
-      user-select: none;
-      transition: background 0.3s, color 0.3s;
     }
     #guest-btn:hover {
       background: #a9bcd6;
-      color: #183560;
     }
   </style>
+
 </head>
+
 <body>
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-58DJG5TQ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
   <div class="container">
     <h2>Login</h2>
+
     <form id="loginForm">
-      <input type="text" id="username" placeholder="Username or Email" required autocomplete="username" />
-      <input type="password" id="password" placeholder="Password" required autocomplete="current-password" />
+      <input type="text" id="username" placeholder="Username or Email" required />
+      <input type="password" id="password" placeholder="Password" required />
       <button type="submit">LOGIN</button>
     </form>
+
     <div class="msg" id="error-msg"></div>
+
     <a href="register.html">Create a new account</a>
     <button type="button" id="guest-btn">Continue as Guest</button>
   </div>
@@ -154,7 +141,6 @@
     const loginForm = document.getElementById('loginForm');
     const errorMsg = document.getElementById('error-msg');
 
-    // Admin account (hardcoded)
     const admin = {
       username: "admin",
       email: "admin@tripcore.com",
@@ -168,7 +154,6 @@
       const username = document.getElementById('username').value.trim();
       const password = document.getElementById('password').value;
 
-      // Check admin login
       if ((username === admin.username || username === admin.email) && password === admin.password) {
         errorMsg.style.color = "lightgreen";
         errorMsg.textContent = "Admin login successful! Redirecting...";
@@ -178,14 +163,12 @@
         return;
       }
 
-      // Check regular users in localStorage
       const users = JSON.parse(localStorage.getItem('users')) || [];
       const user = users.find(u =>
         (u.username === username || u.email === username) && u.password === password
       );
 
       if (user) {
-        // Save logged-in user for session
         localStorage.setItem('currentUser', JSON.stringify(user));
         errorMsg.style.color = "lightgreen";
         errorMsg.textContent = "Login successful! Redirecting...";
@@ -198,12 +181,11 @@
       }
     });
 
-    // Continue as Guest button logic
     document.getElementById('guest-btn').onclick = function() {
       localStorage.removeItem('currentUser');
       window.location.href = "index.html";
     };
   </script>
+
 </body>
 </html>
-
